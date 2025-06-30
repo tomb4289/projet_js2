@@ -1,0 +1,164 @@
+export const produits = [
+  {
+    id: 574475,
+    title: "Final Destination Bloodlines",
+    description:
+      "Plagued by a violent recurring nightmare, college student Stefanie heads home to track down the one person who might be able to break the cycle and save her family from the grisly demise that inevitably awaits them all.",
+    poster: "https://image.tmdb.org/t/p/w500/6WxhEvFsauuACfv8HyoVX6mZKFj.jpg",
+    release_date: "2025-05-14",
+    rating: 7.203,
+  },
+  {
+    id: 1087891,
+    title: "The Amateur",
+    description:
+      "After his life is turned upside down when his wife is killed in a London terrorist attack, a brilliant but introverted CIA decoder takes matters into his own hands when his supervisors refuse to take action.",
+    poster: "https://image.tmdb.org/t/p/w500/SNEoUInCa5fAgwuEBMIMBGvkkh.jpg",
+    release_date: "2025-04-09",
+    rating: 6.9,
+  },
+  {
+    id: 1426776,
+    title: "STRAW",
+    description:
+      "What will be her last straw? A devastatingly bad day pushes a hardworking single mother to the breaking point — and into a shocking act of desperation.",
+    poster: "https://image.tmdb.org/t/p/w500/t3cmnXYtxJb9vVL1ThvT2CWSe1n.jpg",
+    release_date: "2025-06-05",
+    rating: 8.038,
+  },
+  {
+    id: 552524,
+    title: "Lilo & Stitch",
+    description:
+      "The wildly funny and touching story of a lonely Hawaiian girl and the fugitive alien who helps to mend her broken family.",
+    poster: "https://image.tmdb.org/t/p/w500/A89x10Eqt43bPFEWPpbraWwkaFr.jpg",
+    release_date: "2025-05-17",
+    rating: 7.104,
+  },
+  {
+    id: 1087192,
+    title: "How to Train Your Dragon",
+    description:
+      "On the rugged isle of Berk, where Vikings and dragons have been bitter enemies for generations, Hiccup stands apart, defying centuries of tradition when he befriends Toothless, a feared Night Fury dragon. Their unlikely bond reveals the true nature of dragons, challenging the very foundations of Viking society.",
+    poster: "https://image.tmdb.org/t/p/w500/q5pXRYTycaeW6dEgsCrd4mYPmxM.jpg",
+    release_date: "2025-06-06",
+    rating: 7.9,
+  },
+  {
+    id: 1181039,
+    title: "Candle in the Tomb: The Worm Valley",
+    description:
+      'Adapted from the 3rd volume in the novel series "Candle in the Tomb" by Zhang Mu Ye. Hu Bayi, Wang Kaixuan, and Shiely Yang, infected with a curse, embark on a journey to King Xian\'s tomb to retrieve the Haochen Bead and break the curse. They face ancient organs, ghostly visions, explosive bugs, and a massive salamander.',
+    poster: "https://image.tmdb.org/t/p/w500/7Hk1qxAvZi9H9cfBb4iHkoGjapH.jpg",
+    release_date: "2023-09-22",
+    rating: 8,
+  },
+  {
+    id: 1240475,
+    title: "Hunt the Wicked",
+    description:
+      'The film tells the story of narcotics police officer Huang Mingjin and the "mysterious figure" Wei Yunzhou. Through completely different means and methods, in the process of calculating and wrestling with each other, they tear apart the facade of urban tranquility, exposing the underground drug network woven by the hidden hand "Long Wang", and ultimately eradicate the darkness with the sword of justice, revealing the dawn of light.',
+    poster: "https://image.tmdb.org/t/p/w500/m5UBHbEjQJx3AkRZWRY6A4l4ZDT.jpg",
+    release_date: "2024-02-12",
+    rating: 5.571,
+  },
+  {
+    id: 1376434,
+    title: "Predator: Killer of Killers",
+    description:
+      "While three of the fiercest warriors in human history—a Viking raider, a ninja in feudal Japan, and a WWII pilot—are killers in their own right, they are merely prey for their new opponent: the ultimate killer of killers.",
+    poster: "https://image.tmdb.org/t/p/w500/2XDQa6EmFHSA37j1t0w88vpWqj9.jpg",
+    release_date: "2025-06-05",
+    rating: 7.997,
+  },
+  {
+    id: 870028,
+    title: "The Accountant²",
+    description:
+      "When an old acquaintance is murdered, Wolff is compelled to solve the case. Realizing more extreme measures are necessary, Wolff recruits his estranged and highly lethal brother, Brax, to help. In partnership with Marybeth Medina, they uncover a deadly conspiracy, becoming targets of a ruthless network of killers who will stop at nothing to keep their secrets buried.",
+    poster: "https://image.tmdb.org/t/p/w500/kMDUS7VmFhb2coRfVBoGLR8ADBt.jpg",
+    release_date: "2025-04-23",
+    rating: 7.2,
+  },
+  {
+    id: 1239193,
+    title: "Deep Cover",
+    description:
+      "Kat is an improv comedy teacher beginning to question if she’s missed her shot at success. When an undercover cop offers her the role of a lifetime, she recruits two of her students to infiltrate London’s gangland by impersonating dangerous criminals.",
+    poster: "https://image.tmdb.org/t/p/w500/euM8fJvfH28xhjGy25LiygxfkWc.jpg",
+    release_date: "2025-06-12",
+    rating: 6.743,
+  },
+  {
+    id: 1379587,
+    title: "Utopia",
+    description:
+      "A soldier searching for his missing wife breaks into a high-tech facility, believing she's been caught in a human trafficking ring. But beyond its walls, he finds a surreal, futuristic fantasy park where reality and illusion blur. As he navigates this seductive and dangerous world, a shocking truth pulls him deeper into a deadly game where nothing is as it seems.",
+    poster: "https://image.tmdb.org/t/p/w500/yef0tY1Nw3BX8PJTfBLieqHj5Hw.jpg",
+    release_date: "2024-12-09",
+    rating: 5.432,
+  },
+  {
+    id: 1289601,
+    title: "Life After Fighting",
+    description:
+      "Retired martial arts world champion Alex Faulkner has settled into a simple life, when the disappearance of two of his students leads to an unthinkable discovery close to home. Just when all hope of finding the children is lost, he locates the imprisoned girls and unsurfaces an international child trafficking operation, which draws him back into the fight of his life against those behind it.",
+    poster: "https://image.tmdb.org/t/p/w500/uKWAk4BHzyEOMmLKUDXoIAPhH36.jpg",
+    release_date: "2024-06-07",
+    rating: 7.1,
+  },
+  {
+    id: 1233413,
+    title: "Sinners",
+    description:
+      "Trying to leave their troubled lives behind, twin brothers return to their hometown to start again, only to discover that an even greater evil is waiting to welcome them back.",
+    poster: "https://image.tmdb.org/t/p/w500/yqsCU5XOP2mkbFamzAqbqntmfav.jpg",
+    release_date: "2025-04-16",
+    rating: 7.552,
+  },
+  {
+    id: 1450599,
+    title: "K.O.",
+    description:
+      "A former fighter must find the missing son of an opponent he accidentally killed years ago, taking on a brutally violent crime gang in Marseille.",
+    poster: "https://image.tmdb.org/t/p/w500/qcM2sUiAeP4zXwx4ADSvgc9S58k.jpg",
+    release_date: "2025-06-05",
+    rating: 6.584,
+  },
+  {
+    id: 1315988,
+    title: "Mikaela",
+    description:
+      "During the eve of the 6th of January, a record-breaking snowstorm sweeps across Spain. In the midst of its chaos, a group of robbers seizes the opportunity to hijack an armoured van. A few meters away is Leo, a finished policeman who has nothing to lose. With the unexpected aid of a young woman, he will try to stop the band from running away with their loot.",
+    poster: "https://image.tmdb.org/t/p/w500/xG8olkWOmoW78GbozKbS2UxYGEo.jpg",
+    release_date: "2025-01-31",
+    rating: 6.196,
+  },
+  {
+    id: 950387,
+    title: "A Minecraft Movie",
+    description:
+      "Four misfits find themselves struggling with ordinary problems when they are suddenly pulled through a mysterious portal into the Overworld: a bizarre, cubic wonderland that thrives on imagination. To get back home, they'll have to master this world while embarking on a magical quest with an unexpected, expert crafter, Steve.",
+    poster: "https://image.tmdb.org/t/p/w500/yFHHfHcUgGAxziP1C3lLt0q2T4s.jpg",
+    release_date: "2025-03-31",
+    rating: 6.507,
+  },
+  {
+    id: 1017163,
+    title: "The Roundup: Punishment",
+    description:
+      "'Monster Cop' Ma Seok-do investigates an illegal online gambling business led by a former STS Baek and an IT genius CEO Chang. Ma proposes an unexpected alliance to Jang and begins hunting down the criminals.",
+    poster: "https://image.tmdb.org/t/p/w500/yk38mNoJpsswmk9o7i7eLhO4mc.jpg",
+    release_date: "2024-04-24",
+    rating: 6.854,
+  },
+  {
+    id: 1442776,
+    title: "Crazy Lizard",
+    description:
+      'A young man climbs into the mountains to pick up a meteorite that has fallen there and is killed by something. The "thing" descends to the village and begins to eat the inhabitants one by one, terrorizing the entire island.',
+    poster: "https://image.tmdb.org/t/p/w500/9TFaFsSXedaALXTzba349euDeoY.jpg",
+    release_date: "2024-03-27",
+    rating: 0,
+  },
+];

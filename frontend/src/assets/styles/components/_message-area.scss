@@ -1,0 +1,29 @@
+@use "../abstracts/variables" as v;
+@use "sass:color";
+
+.message-area {
+  padding: v.$spacing-md;
+  margin-bottom: v.$spacing-lg;
+  border-radius: v.$border-radius-sm;
+  font-size: v.$font-size-md;
+  text-align: center;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity v.$transition-speed ease-in-out;
+
+  &--visible {
+    opacity: 1;
+  }
+
+  &--success {
+    background-color: color.adjust(v.$color-success, $lightness: 25%);
+    color: color.adjust(v.$color-success, $lightness: -20%);
+    border: 1px solid v.$color-success;
+  }
+
+  &--error {
+    background-color: color.adjust(v.$color-error, $lightness: 25%);
+    color: color.adjust(v.$color-error, $lightness: -20%);
+    border: 1px solid v.$color-error;
+  }
+}

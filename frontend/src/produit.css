@@ -1,0 +1,34 @@
+.content {
+  display: flex;
+  justify-content: center;
+}
+.content .product-container {
+  display: flex;
+  width: 75rem;
+  flex-direction: row;
+}
+.content .product {
+  display: flex;
+}
+.content .product-image {
+  min-width: 25rem;
+  max-width: 25rem;
+}
+.content .product-image img {
+  max-width: 100%;
+}
+.content .product-details {
+  display: flex;
+  flex-direction: column;
+}
+.content .product-details .brand h2 {
+  margin-top: 0;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+.content .product-details .price h3 {
+  margin-top: 0;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}/*# sourceMappingURL=produit.css.map */

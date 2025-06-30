@@ -1,0 +1,8 @@
+@use "../abstracts/variables" as v;
+
+.movie-list {
+  display: grid;
+  gap: v.$spacing-xl;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  padding: v.$spacing-lg 0;
+}

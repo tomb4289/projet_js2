@@ -1,0 +1,52 @@
+@use "../abstracts/variables" as v;
+@use "sass:color";
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Ancizar Sans", sans-serif;
+  font-size: v.$font-size-base;
+  background-color: v.$color-primary-dark;
+  color: v.$color-text-light;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: v.$color-text-light;
+  margin-bottom: v.$spacing-sm;
+}
+
+h1 {
+  font-size: v.$font-size-xxl;
+}
+h2 {
+  font-size: v.$font-size-xl;
+}
+h3 {
+  font-size: v.$font-size-lg;
+}
+h4 {
+  font-size: v.$font-size-md;
+}
+
+p {
+  color: v.$color-text-dark;
+  margin-bottom: v.$spacing-xs;
+}
+
+a {
+  color: v.$color-accent-red;
+  transition: color v.$transition-speed ease-in-out;
+  &:hover {
+    color: color.adjust(v.$color-accent-red, $lightness: 10%);
+  }
+}

@@ -1,0 +1,29 @@
+@use "../abstracts/variables" as v;
+
+.site-container {
+  min-height: 100vh;
+  display: grid;
+  grid:
+    "header" auto
+    "main-content" 1fr
+    "footer" auto /
+    1fr;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 v.$spacing-md;
+}
+
+.site-main-content {
+  grid-area: main-content;
+  padding: v.$spacing-lg 0;
+  flex-grow: 1;
+}
+
+.site-footer {
+  grid-area: footer;
+  padding: v.$spacing-lg;
+  background-color: v.$color-primary-light;
+  font-size: v.$font-size-md;
+  text-align: center;
+  color: v.$color-text-light;
+}

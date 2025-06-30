@@ -1,0 +1,57 @@
+@use "../abstracts/variables" as v;
+@use "sass:color";
+
+.button {
+  display: inline-block;
+  border: none;
+  border-radius: v.$border-radius-sm;
+  padding: v.$spacing-sm v.$spacing-lg;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all v.$transition-speed ease-in-out;
+  text-align: center;
+  font-size: v.$font-size-sm;
+
+  &:hover {
+    box-shadow: v.$box-shadow-light;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  &--primary {
+    background-color: v.$color-accent-red;
+    color: v.$color-text-light;
+
+    &:hover {
+      background-color: color.adjust(v.$color-accent-red, $lightness: 10%);
+    }
+  }
+
+  &--secondary {
+    background-color: transparent;
+    border: 1px solid v.$color-accent-red;
+    color: v.$color-accent-red;
+
+    &:hover {
+      background-color: rgba(v.$color-accent-red, 0.1);
+    }
+  }
+
+  &--danger {
+    background-color: v.$color-error;
+    color: v.$color-text-light;
+
+    &:hover {
+      background-color: color.adjust(v.$color-error, $lightness: 10%);
+    }
+  }
+
+  &--small {
+    padding: v.$spacing-xxs v.$spacing-sm;
+    font-size: v.$font-size-sm;
+  }
+}
