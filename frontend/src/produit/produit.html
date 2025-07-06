@@ -1,146 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap"
-      rel="stylesheet"
-    />
-    <title>Détail du Film</title>
-  </head>
-  <body>
-    <div class="site-container">
-      <header class="main-header">
-        <a class="main-header__brand" href="/">Films</a>
-        <ul class="main-header__nav">
-          <li class="main-header__nav-item">
-            <a
-              href="/"
-              class="main-header__nav-link main-header__nav-link--active"
-              >Accueil</a
-            >
-          </li>
-          <li class="main-header__nav-item">
-            <a href="./form/form.html" class="main-header__nav-link"
-              >Ajouter un film</a
-            >
-          </li>
-          <li class="main-header__nav-item">
-            <a href="./register/register.html" class="main-header__nav-link"
-              >S'inscrire</a
-            >
-          </li>
-          <li class="main-header__nav-item">
-            <a href="../users/users.html" class="main-header__nav-link"
-              >Gérer les utilisateurs</a
-            >
-          </li>
-        </ul>
-      </header>
+import "./assets/styles/styles.scss";
+import { env } from "./config/env.js";
+import { Alert } from "./components/alert/index.js";
+import { divRemove } from "./components/divRemove/index.js";
 
-      <div class="site-main-content">
-        <div id="messageArea" class="message-area"></div>
-        <div id="movieDetailContainer">
-          <p>Chargement du film...</p>
-        </div>
+const content = document.querySelector(".site-main-content");
 
-        <div class="movie-actions">
-          <button id="editMovieBtn" class="button button--primary">
-            Modifier le Film
-          </button>
-          <button id="deleteMovieBtn" class="button button--danger">
-            Supprimer le Film
-          </button>
-        </div>
+const displayMovies = (movies) => {
+  const moviesContainer = document.createElement("div");
+  moviesContainer.className = "movie-list";
+  const movieElements = movies
+    .slice(0)
+    .reverse()
+    .map((movie, index) => createMovieElement(movie, index));
 
-        <div id="movieFormContainer" class="hidden form-container">
-          <h3>Modifier le Film</h3>
-          <form id="movieForm" class="form form-grid">
-            <input type="hidden" id="movieId" name="id" />
+  moviesContainer.append(...movieElements);
+  addEditDeleteEvents(moviesContainer);
+  content.append(moviesContainer);
+};
 
-            <div class="form__group">
-              <label for="title" class="form__label">Titre:</label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                required
-                class="form__input"
-              />
-            </div>
-
-            <div class="form__group">
-              <label for="poster" class="form__label">URL Poster:</label>
-              <input
-                type="url"
-                id="poster"
-                name="poster"
-                required
-                class="form__input"
-              />
-            </div>
-
-            <div class="form__group">
-              <label for="description" class="form__label">Description:</label>
-              <textarea
-                id="description"
-                name="description"
-                rows="4"
-                required
-                class="form__textarea"
-              ></textarea>
-            </div>
-
-            <div class="form__group">
-              <label for="release_date" class="form__label"
-                >Date de sortie (Année):</label
-              >
-              <input
-                type="number"
-                id="release_date"
-                name="release_date"
-                min="1800"
-                max="2100"
-                class="form__input"
-              />
-            </div>
-
-            <div class="form__group">
-              <label for="rating" class="form__label">Note (0-10):</label>
-              <input
-                type="number"
-                id="rating"
-                name="rating"
-                min="0"
-                max="10"
-                step="0.1"
-                class="form__input"
-              />
-            </div>
-
-            <div class="form__actions">
-              <button type="submit" class="button button--primary">
-                Enregistrer les modifications
-              </button>
-              <button
-                type="button"
-                id="cancelEditFormBtn"
-                class="button button--secondary"
-              >
-                Annuler
-              </button>
-            </div>
-          </form>
+const createMovieElement = (movie, index) => {
+  const div = document.createElement("div");
+  div.className = "movie-card";
+  div.innerHTML = `
+    <i data-id="${movie.id}" class="x_delete fa-solid fa-trash"></i>
+    <i data-id="${movie.id}" class="x_edit fa-solid fa-pen-to-square"></i>
+    <a href="/src/produit/produit.html?id=${movie.id}">
+      <img src="${movie.poster}" alt="${movie.title}" class="movie-card__poster">
+      <div class="movie-card__content">
+        <h2 class="movie-card__title">${movie.title}</h2>
+        <p class="movie-card__description">${movie.description.substring(0, 100)}...</p>
+        <div class="movie-card__meta">
+          <span class="movie-card__release-date">Sortie: ${
+            movie.release_date ? movie.release_date.substring(0, 4) : "N/A"
+          }</span>
+          <span class="movie-card__rating">⭐ ${movie.rating}/10</span>
         </div>
       </div>
+    </a>
+  `;
+  return div;
+};
 
-      <footer class="site-footer">© MOVIE DATABASE</footer>
-    </div>
+const addEditDeleteEvents = (container) => {
+  const deleteButtons = container.querySelectorAll(".fa-trash");
+  const editButtons = container.querySelectorAll(".fa-pen-to-square");
+  
+  editButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const target = event.target;
+      const movieId = target.dataset.id;
+      window.location.assign(`/src/form/form.html?id=${movieId}`);
+    });
+  });
 
-    <script type="module" src="./produit.js"></script>
-  </body>
-</html>
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", async (event) => {
+      event.preventDefault();
+      try {
+        const confirm = await Alert.confirm(
+          "Cette action est irréversible. Désirez-vous continuer ?",
+          "Supprimer",
+          "Annuler"
+        );
+        if (confirm) {
+          const target = event.target;
+          const movieId = target.dataset.id;
+          const response = await fetch(
+            `${env.BACKEND_PRODUCTS_URL}/${movieId}`,
+            {
+              method: "DELETE",
+            }
+          );
+          const body = await response.json();
+          divRemove(".movie-list");
+          fetchMovies();
+          Alert.success("Film supprimé avec succès!");
+        }
+      } catch (e) {
+        console.log("Erreur lors de la suppression:", e);
+        Alert.error("Erreur lors de la suppression du film");
+      }
+    });
+  });
+};
+
+const fetchMovies = async () => {
+  try {
+    const response = await fetch(`${env.BACKEND_PRODUCTS_URL}`);
+    let movies = await response.json();
+    if (!Array.isArray(movies)) {
+      movies = [movies];
+    }
+    displayMovies(movies);
+  } catch (e) {
+    console.log("Erreur lors du chargement des films:", e);
+    Alert.error("Erreur lors du chargement des films");
+  }
+};
+
+fetchMovies();

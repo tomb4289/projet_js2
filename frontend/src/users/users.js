@@ -1,197 +1,102 @@
-import "../assets/styles/styles.scss";
+import "./assets/styles/styles.scss";
+import { env } from "./config/env.js";
+import { Alert } from "./components/alert/index.js";
+import { divRemove } from "./components/divRemove/index.js";
 
-const usersTableBody = document.getElementById("users-table-body");
-const userFormContainer = document.getElementById("user-form-container");
-const addUserBtn = document.getElementById("add-user-btn");
-const userForm = document.getElementById("user-form");
-const cancelUserFormBtn = document.getElementById("cancel-user-form");
-const userMessage = document.getElementById("user-message");
-const userFormErrors = document.getElementById("user-form-errors");
+const content = document.querySelector(".site-main-content");
 
-let currentUserId = null;
+const displayMovies = (movies) => {
+  const moviesContainer = document.createElement("div");
+  moviesContainer.className = "movie-list";
+  const movieElements = movies
+    .slice(0)
+    .reverse()
+    .map((movie, index) => createMovieElement(movie, index));
 
-const API_BASE_URL = "http://localhost:5252/api/users";
-
-const fetchUsers = async () => {
-  try {
-    userMessage.textContent = "Chargement des utilisateurs...";
-    const response = await fetch(API_BASE_URL);
-    if (!response.ok) {
-      throw new Error(`Erreur HTTP: ${response.status}`);
-    }
-    const users = await response.json();
-    displayUsers(users);
-    userMessage.textContent = "";
-  } catch (error) {
-    userMessage.textContent = `Erreur lors du chargement des utilisateurs: ${error.message}`;
-    console.error("Erreur de fetchUsers:", error);
-    usersTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center;">Impossible de charger les utilisateurs.</td></tr>`;
-  }
+  moviesContainer.append(...movieElements);
+  addEditDeleteEvents(moviesContainer);
+  content.append(moviesContainer);
 };
 
-const displayUsers = (users) => {
-  usersTableBody.innerHTML = "";
-  if (users.length === 0) {
-    usersTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center;">Aucun utilisateur trouvé.</td></tr>`;
-    return;
-  }
-  users.forEach((user) => {
-    const row = usersTableBody.insertRow();
-    row.innerHTML = `
-            <td>${user.id}</td>
-            <td>${user.username || "N/A"}</td>
-            <td>${user.email || "N/A"}</td>
-            <td>
-                <button class="btn-edit" data-id="${user.id}">Modifier</button>
-                <button class="btn-delete" data-id="${
-                  user.id
-                }">Supprimer</button>
-            </td>
-        `;
-  });
-
-  document.querySelectorAll(".btn-edit").forEach((button) => {
-    button.addEventListener("click", (e) => editUser(e.target.dataset.id));
-  });
-  document.querySelectorAll(".btn-delete").forEach((button) => {
-    button.addEventListener("click", (e) => deleteUser(e.target.dataset.id));
-  });
+const createMovieElement = (movie, index) => {
+  const div = document.createElement("div");
+  div.className = "movie-card";
+  div.innerHTML = `
+    <i data-id="${movie.id}" class="x_delete fa-solid fa-trash"></i>
+    <i data-id="${movie.id}" class="x_edit fa-solid fa-pen-to-square"></i>
+    <a href="/src/produit/produit.html?id=${movie.id}">
+      <img src="${movie.poster}" alt="${movie.title}" class="movie-card__poster">
+      <div class="movie-card__content">
+        <h2 class="movie-card__title">${movie.title}</h2>
+        <p class="movie-card__description">${movie.description.substring(0, 100)}...</p>
+        <div class="movie-card__meta">
+          <span class="movie-card__release-date">Sortie: ${
+            movie.release_date ? movie.release_date.substring(0, 4) : "N/A"
+          }</span>
+          <span class="movie-card__rating">⭐ ${movie.rating}/10</span>
+        </div>
+      </div>
+    </a>
+  `;
+  return div;
 };
 
-const showUserForm = (user = null) => {
-  userForm.reset();
-  userFormErrors.innerHTML = "";
-  if (user) {
-    currentUserId = user.id;
-    userForm.id.value = user.id;
-    userForm.username.value = user.username;
-    userForm.email.value = user.email;
-    userForm.password.placeholder =
-      "Laisser vide pour conserver l'ancien mot de passe";
-    userForm.password.required = false;
-  } else {
-    currentUserId = null;
-    userForm.id.value = "";
-    userForm.password.placeholder = "";
-    userForm.password.required = true;
-  }
-  userFormContainer.style.display = "block";
-  window.scrollTo(0, userFormContainer.offsetTop);
-};
-
-const hideUserForm = () => {
-  userFormContainer.style.display = "none";
-  userForm.reset();
-  currentUserId = null;
-};
-
-const submitUserForm = async (event) => {
-  event.preventDefault();
-  userFormErrors.innerHTML = "";
-  const formData = new FormData(userForm);
-  const userData = Object.fromEntries(formData.entries());
-
-  let errors = [];
-  if (!userData.username) errors.push("Le nom d'utilisateur est obligatoire.");
-  if (!userData.email) errors.push("L'email est obligatoire.");
-  else if (!/\S+@\S+\.\S+/.test(userData.email))
-    errors.push("Le format de l'email est invalide.");
-
-  if (!currentUserId && !userData.password)
-    errors.push("Le mot de passe est obligatoire pour un nouvel utilisateur.");
-  if (currentUserId && userData.password && userData.password.length < 6)
-    errors.push("Le mot de passe doit contenir au moins 6 caractères.");
-
-  if (errors.length > 0) {
-    userFormErrors.innerHTML = errors.map((e) => `<li>${e}</li>`).join("");
-    return;
-  }
-
-  try {
-    const method = currentUserId ? "PUT" : "POST";
-    const url = currentUserId
-      ? `${API_BASE_URL}/${currentUserId}`
-      : API_BASE_URL;
-
-    const dataToSend = { username: userData.username, email: userData.email };
-    if (userData.password) {
-      dataToSend.password = userData.password;
-    }
-
-    const response = await fetch(url, {
-      method: method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToSend),
+const addEditDeleteEvents = (container) => {
+  const deleteButtons = container.querySelectorAll(".fa-trash");
+  const editButtons = container.querySelectorAll(".fa-pen-to-square");
+  
+  editButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const target = event.target;
+      const movieId = target.dataset.id;
+      window.location.assign(`/src/form/form.html?id=${movieId}`);
     });
+  });
 
-    const result = await response.json();
-
-    if (response.ok) {
-      userMessage.style.color = "green";
-      userMessage.textContent = `Utilisateur ${
-        currentUserId ? "mis à jour" : "ajouté"
-      } avec succès!`;
-      hideUserForm();
-      fetchUsers();
-    } else {
-      userMessage.style.color = "red";
-      userMessage.textContent = result.error || "Erreur lors de l'opération.";
-      userFormErrors.innerHTML = `<li>${
-        result.error || "Erreur inconnue."
-      }</li>`;
-    }
-  } catch (error) {
-    userMessage.style.color = "red";
-    userMessage.textContent = "Erreur réseau ou du serveur.";
-    console.error("Erreur de soumission:", error);
-  }
-};
-
-const editUser = async (id) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/${id}`);
-    if (!response.ok) {
-      throw new Error(`Utilisateur avec l'ID ${id} non trouvé.`);
-    }
-    const user = await response.json();
-    showUserForm(user);
-  } catch (error) {
-    userMessage.style.color = "red";
-    userMessage.textContent = `Erreur lors du chargement de l'utilisateur pour modification: ${error.message}`;
-    console.error("Erreur editUser:", error);
-  }
-};
-
-const deleteUser = async (id) => {
-  if (!confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur?")) {
-    return;
-  }
-  try {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
-      method: "DELETE",
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", async (event) => {
+      event.preventDefault();
+      try {
+        const confirm = await Alert.confirm(
+          "Cette action est irréversible. Désirez-vous continuer ?",
+          "Supprimer",
+          "Annuler"
+        );
+        if (confirm) {
+          const target = event.target;
+          const movieId = target.dataset.id;
+          const response = await fetch(
+            `${env.BACKEND_PRODUCTS_URL}/${movieId}`,
+            {
+              method: "DELETE",
+            }
+          );
+          const body = await response.json();
+          divRemove(".movie-list");
+          fetchMovies();
+          Alert.success("Film supprimé avec succès!");
+        }
+      } catch (e) {
+        console.log("Erreur lors de la suppression:", e);
+        Alert.error("Erreur lors de la suppression du film");
+      }
     });
+  });
+};
 
-    if (response.ok) {
-      userMessage.style.color = "green";
-      userMessage.textContent = "Utilisateur supprimé avec succès!";
-      fetchUsers();
-    } else {
-      const result = await response.json();
-      userMessage.style.color = "red";
-      userMessage.textContent =
-        result.error || "Erreur lors de la suppression.";
+const fetchMovies = async () => {
+  try {
+    const response = await fetch(`${env.BACKEND_PRODUCTS_URL}`);
+    let movies = await response.json();
+    if (!Array.isArray(movies)) {
+      movies = [movies];
     }
-  } catch (error) {
-    userMessage.style.color = "red";
-    userMessage.textContent = "Erreur réseau ou du serveur.";
-    console.error("Erreur deleteUser:", error);
+    displayMovies(movies);
+  } catch (e) {
+    console.log("Erreur lors du chargement des films:", e);
+    Alert.error("Erreur lors du chargement des films");
   }
 };
 
-addUserBtn.addEventListener("click", () => showUserForm());
-cancelUserFormBtn.addEventListener("click", hideUserForm);
-userForm.addEventListener("submit", submitUserForm);
-
-fetchUsers();
+fetchMovies();
