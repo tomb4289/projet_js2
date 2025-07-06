@@ -6,13 +6,11 @@ const form = document.querySelector("form");
 const errorElement = document.querySelector("#errors");
 let errors = [];
 
-// Get movie ID from URL for editing
 const getMovieIdFromUrl = () => {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get("id");
 };
 
-// Load movie data for editing
 const loadMovieForEdit = async (movieId) => {
   if (!movieId) return;
   
@@ -31,7 +29,6 @@ const loadMovieForEdit = async (movieId) => {
     document.getElementById("release_date").value = movie.release_date;
     document.getElementById("rating").value = movie.rating;
     
-    // Update form title
     document.querySelector(".form__title").textContent = "Modifier le Film";
     document.querySelector('button[type="submit"]').textContent = "Mettre à jour";
     
@@ -144,7 +141,6 @@ const displayErrors = () => {
   }
 };
 
-// Initialize form
 const movieId = getMovieIdFromUrl();
 if (movieId) {
   loadMovieForEdit(movieId);

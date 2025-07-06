@@ -24,8 +24,8 @@ const createMovieElement = (movie, index) => {
   div.className = "movie-card";
   div.style.position = "relative";
   div.innerHTML = `
-    <i data-id="${movie.id}" class="x_delete fa-solid fa-trash" style="position: absolute; top: 10px; right: 10px; color: #f44336; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.7); padding: 8px; border-radius: 50%;"></i>
-    <i data-id="${movie.id}" class="x_edit fa-solid fa-pen-to-square" style="position: absolute; top: 10px; right: 50px; color: #e50914; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.7); padding: 8px; border-radius: 50%;"></i>
+    <i data-id="${movie.id}" class="x_delete fa-solid fa-trash"></i>
+    <i data-id="${movie.id}" class="x_edit fa-solid fa-pen-to-square"></i>
     <a href="/produit/produit.html?id=${movie.id}">
       <img src="${movie.poster}" alt="${movie.title}" class="movie-card__poster">
       <div class="movie-card__content">
@@ -82,7 +82,7 @@ const addEditDeleteEvents = (container) => {
           Alert.success("Film supprimé avec succès!");
         }
       } catch (e) {
-        console.log("Erreur lors de la suppression:", e);
+        console.log("e : ", e);
         Alert.error("Erreur lors de la suppression du film");
       }
     });
@@ -98,7 +98,7 @@ const fetchMovies = async () => {
     }
     displayMovies(movies);
   } catch (e) {
-    console.log("Erreur lors du chargement des films:", e);
+    console.log("e : ", e);
     Alert.error("Erreur lors du chargement des films");
   }
 };

@@ -24,7 +24,7 @@ export default class Product {
   static async findAvailable() {
     const productsDB = await productsDBPromise;
     const allMovies = await productsDB.findAll();
-    return allMovies; // For movies, all are considered "available"
+    return allMovies;
   }
 
   static async update(id, updates) {
@@ -60,7 +60,6 @@ export default class Product {
   }
 
   static async updateStock(id, quantity) {
-    // For movies, we don't really have stock, so just return the movie
     const productsDB = await productsDBPromise;
     return productsDB.findById(id);
   }

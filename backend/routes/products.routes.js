@@ -21,7 +21,7 @@ router.get("/", listerTousLesProduits);
 // GET /available - Produits disponibles
 router.get("/available", produitsDisponibles);
 
-// GET /search/:query - Recherche de produits (MUST be before /:id)
+// GET /search/:query - Recherche de produits
 router.get("/search/:query", rechercheDeProduits);
 
 // GET /:id - Obtenir un produit

@@ -115,7 +115,7 @@ const submitUserForm = async (event) => {
 
     const dataToSend = { 
       username: userData.username, 
-      nom: userData.username, // Also send as nom for compatibility
+      nom: userData.username,
       email: userData.email 
     };
     if (userData.password) {
