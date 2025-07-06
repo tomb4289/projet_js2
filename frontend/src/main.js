@@ -53,7 +53,7 @@ const addEditDeleteEvents = (container) => {
       event.stopPropagation();
       const target = event.target;
       const movieId = target.dataset.id;
-      window.location.assign(`/src/form/form.html?id=${movieId}`);
+      window.location.assign(`./form/form.html?id=${movieId}`);
     });
   });
 
