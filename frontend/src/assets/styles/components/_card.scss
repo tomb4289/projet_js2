@@ -1,52 +1,125 @@
-import "./assets/styles/styles.scss";
-import { env } from "./config/env.js";
-import { Alert } from "./components/alert/index.js";
-import { divRemove } from "./components/divRemove/index.js";
+@use "../abstracts/variables" as v;
+@use "sass:color";
 
-const content = document.querySelector(".site-main-content");
+.movie-card {
+  background-color: v.$color-primary-light;
+  border-radius: v.$border-radius-md;
+  box-shadow: v.$box-shadow-dark;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform v.$transition-speed ease,
+    box-shadow v.$transition-speed ease;
+  height: 100%;
+  position: relative;
 
-const displayMovies = (movies) => {
-  const moviesContainer = document.createElement("div");
-  moviesContainer.className = "movie-list";
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+  }
+
+  .x_delete {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: v.$color-error;
+    cursor: pointer;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px;
+    border-radius: 50%;
+    
+    &:hover {
+      color: color.adjust(v.$color-error, $lightness: 10%);
     }
   }
   
   .x_edit {
+    position: absolute;
+    top: 10px;
     right: 50px;
     color: v.$color-accent-red;
+    cursor: pointer;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px;
+    border-radius: 50%;
     
     &:hover {
       color: color.adjust(v.$color-accent-red, $lightness: 10%);
     }
   }
 
-  productsContainer.append(...products);
-  content.append(productsContainer);
-};
+  &__poster {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+  }
 
-const createProductElement = (produit, index) => {
-  const a = document.createElement("a");
-  a.className = "movie-card";
-  a.href = `/produit/produit.html?id=${produit.id}`;
-  a.innerHTML = `
-    <img src="${produit.poster}" alt="${
-    produit.title
-  }" class="movie-card__poster">
-    <div class="movie-card__content">
-      <h2 class="movie-card__title">${produit.title}</h2>
-      <p class="movie-card__description">${produit.description.substring(
-        0,
-        100
-      )}...</p>
-      <div class="movie-card__meta">
-        <span class="movie-card__release-date">Sortie: ${
-          produit.release_date ? produit.release_date.substring(0, 4) : "N/A"
-        }</span>
-        <span class="movie-card__rating">⭐ ${produit.rating}/10</span>
-      </div>
-    </div>
-  `;
-  return a;
-};
+  &__content {
+    padding: v.$spacing-md;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
-displayProduits();
+  &__title {
+    font-size: v.$font-size-lg;
+    color: v.$color-accent-red;
+    margin-bottom: v.$spacing-xs;
+    line-height: 1.2;
+  }
+
+  &__description {
+    font-size: v.$font-size-sm;
+    color: v.$color-text-dark;
+    margin-bottom: v.$spacing-sm;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: v.$font-size-sm;
+    color: v.$color-text-dark;
+    margin-top: v.$spacing-sm;
+  }
+
+  &__release-date {
+    font-weight: 600;
+  }
+
+  &__rating {
+    font-weight: 700;
+    color: v.$color-text-light;
+    background-color: v.$color-primary-dark;
+    padding: v.$spacing-xxs v.$spacing-xs;
+    border-radius: v.$border-radius-sm;
+  }
+}
+
+.movie-poster {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 400px;
+  margin: v.$spacing-md auto;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: v.$border-radius-md;
+    box-shadow: v.$box-shadow-dark;
+  }
+}
+
+.hidden {
+  display: none !important;
+}

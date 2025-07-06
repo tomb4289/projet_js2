@@ -1,102 +1,76 @@
-import "./assets/styles/styles.scss";
-import { env } from "./config/env.js";
-import { Alert } from "./components/alert/index.js";
-import { divRemove } from "./components/divRemove/index.js";
+import "../assets/styles/styles.scss";
 
-const content = document.querySelector(".site-main-content");
+const registerForm = document.getElementById("register-form");
+const errorElement = document.getElementById("errors");
+let errors = [];
 
-const displayMovies = (movies) => {
-  const moviesContainer = document.createElement("div");
-  moviesContainer.className = "movie-list";
-  const movieElements = movies
-    .slice(0)
-    .reverse()
-    .map((movie, index) => createMovieElement(movie, index));
+registerForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  errors = [];
 
-  moviesContainer.append(...movieElements);
-  addEditDeleteEvents(moviesContainer);
-  content.append(moviesContainer);
-};
+  const formData = new FormData(registerForm);
+  const userData = Object.fromEntries(formData.entries());
 
-const createMovieElement = (movie, index) => {
-  const div = document.createElement("div");
-  div.className = "movie-card";
-  div.innerHTML = `
-    <i data-id="${movie.id}" class="x_delete fa-solid fa-trash"></i>
-    <i data-id="${movie.id}" class="x_edit fa-solid fa-pen-to-square"></i>
-    <a href="/src/produit/produit.html?id=${movie.id}">
-      <img src="${movie.poster}" alt="${movie.title}" class="movie-card__poster">
-      <div class="movie-card__content">
-        <h2 class="movie-card__title">${movie.title}</h2>
-        <p class="movie-card__description">${movie.description.substring(0, 100)}...</p>
-        <div class="movie-card__meta">
-          <span class="movie-card__release-date">Sortie: ${
-            movie.release_date ? movie.release_date.substring(0, 4) : "N/A"
-          }</span>
-          <span class="movie-card__rating">⭐ ${movie.rating}/10</span>
-        </div>
-      </div>
-    </a>
-  `;
-  return div;
-};
+  let hasErrors = false;
+  if (!userData.username) {
+    errors.push("Le nom d'utilisateur est obligatoire.");
+    hasErrors = true;
+  }
+  if (!userData.email) {
+    errors.push("L'email est obligatoire.");
+    hasErrors = true;
+  } else if (!/\S+@\S+\.\S+/.test(userData.email)) {
+    errors.push("Le format de l'email est invalide.");
+    hasErrors = true;
+  }
+  if (!userData.password) {
+    errors.push("Le mot de passe est obligatoire.");
+    hasErrors = true;
+  } else if (userData.password.length < 6) {
+    errors.push("Le mot de passe doit contenir au moins 6 caractères.");
+    hasErrors = true;
+  }
 
-const addEditDeleteEvents = (container) => {
-  const deleteButtons = container.querySelectorAll(".fa-trash");
-  const editButtons = container.querySelectorAll(".fa-pen-to-square");
-  
-  editButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      const target = event.target;
-      const movieId = target.dataset.id;
-      window.location.assign(`/src/form/form.html?id=${movieId}`);
-    });
-  });
+  if (hasErrors) {
+    displayErrors();
+    return;
+  }
 
-  deleteButtons.forEach((button) => {
-    button.addEventListener("click", async (event) => {
-      event.preventDefault();
-      try {
-        const confirm = await Alert.confirm(
-          "Cette action est irréversible. Désirez-vous continuer ?",
-          "Supprimer",
-          "Annuler"
-        );
-        if (confirm) {
-          const target = event.target;
-          const movieId = target.dataset.id;
-          const response = await fetch(
-            `${env.BACKEND_PRODUCTS_URL}/${movieId}`,
-            {
-              method: "DELETE",
-            }
-          );
-          const body = await response.json();
-          divRemove(".movie-list");
-          fetchMovies();
-          Alert.success("Film supprimé avec succès!");
-        }
-      } catch (e) {
-        console.log("Erreur lors de la suppression:", e);
-        Alert.error("Erreur lors de la suppression du film");
-      }
-    });
-  });
-};
-
-const fetchMovies = async () => {
   try {
-    const response = await fetch(`${env.BACKEND_PRODUCTS_URL}`);
-    let movies = await response.json();
-    if (!Array.isArray(movies)) {
-      movies = [movies];
+    const response = await fetch("http://localhost:5252/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert(
+        "Inscription réussie ! Vous pouvez maintenant gérer cet utilisateur."
+      );
+      window.location.href = "../users/users.html";
+    } else {
+      errors.push(result.error || "Erreur lors de l'inscription.");
+      displayErrors();
     }
-    displayMovies(movies);
-  } catch (e) {
-    console.log("Erreur lors du chargement des films:", e);
-    Alert.error("Erreur lors du chargement des films");
+  } catch (error) {
+    errors.push("Erreur réseau ou du serveur.");
+    displayErrors();
+    console.error("Erreur d'inscription:", error);
+  }
+});
+
+const displayErrors = () => {
+  if (errors.length) {
+    let errorHTML = "";
+    errors.forEach((e) => {
+      errorHTML += `<li>${e}</li>`;
+    });
+    errorElement.innerHTML = errorHTML;
+  } else {
+    errorElement.innerHTML = "";
   }
 };
-
-fetchMovies();
