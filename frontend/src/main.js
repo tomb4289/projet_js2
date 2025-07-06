@@ -1,4 +1,5 @@
 import "./assets/styles/styles.scss";
+import "./main.scss";
 import { env } from "./config/env.js";
 import { Alert } from "./components/alert/index.js";
 import { divRemove } from "./components/divRemove/index.js";
@@ -21,9 +22,10 @@ const displayMovies = (movies) => {
 const createMovieElement = (movie, index) => {
   const div = document.createElement("div");
   div.className = "movie-card";
+  div.style.position = "relative";
   div.innerHTML = `
-    <i data-id="${movie.id}" class="x_delete fa-solid fa-trash"></i>
-    <i data-id="${movie.id}" class="x_edit fa-solid fa-pen-to-square"></i>
+    <i data-id="${movie.id}" class="x_delete fa-solid fa-trash" style="position: absolute; top: 10px; right: 10px; color: #f44336; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.7); padding: 8px; border-radius: 50%;"></i>
+    <i data-id="${movie.id}" class="x_edit fa-solid fa-pen-to-square" style="position: absolute; top: 10px; right: 50px; color: #e50914; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.7); padding: 8px; border-radius: 50%;"></i>
     <a href="/src/produit/produit.html?id=${movie.id}">
       <img src="${movie.poster}" alt="${movie.title}" class="movie-card__poster">
       <div class="movie-card__content">
@@ -48,6 +50,7 @@ const addEditDeleteEvents = (container) => {
   editButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
+      event.stopPropagation();
       const target = event.target;
       const movieId = target.dataset.id;
       window.location.assign(`/src/form/form.html?id=${movieId}`);
@@ -57,6 +60,7 @@ const addEditDeleteEvents = (container) => {
   deleteButtons.forEach((button) => {
     button.addEventListener("click", async (event) => {
       event.preventDefault();
+      event.stopPropagation();
       try {
         const confirm = await Alert.confirm(
           "Cette action est irréversible. Désirez-vous continuer ?",
