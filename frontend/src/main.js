@@ -82,7 +82,7 @@ const addEditDeleteEvents = (container) => {
           Alert.success("Film supprimé avec succès!");
         }
       } catch (e) {
-        console.log("e : ", e);
+        console.log("Erreur lors de la suppression:", e);
         Alert.error("Erreur lors de la suppression du film");
       }
     });
@@ -98,7 +98,7 @@ const fetchMovies = async () => {
     }
     displayMovies(movies);
   } catch (e) {
-    console.log("e : ", e);
+    console.log("Erreur lors du chargement des films:", e);
     Alert.error("Erreur lors du chargement des films");
   }
 };
