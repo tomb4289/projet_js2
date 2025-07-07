@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <title>Gestion des Utilisateurs</title>
+  </head>
+  <body>
+    <div class="site-container">
+      <header class="main-header">
+        <a class="main-header__brand" href="/">Films</a>
+        <ul class="main-header__nav">
+          <li class="main-header__nav-item">
+            <a
+              href="/"
+              class="main-header__nav-link main-header__nav-link--active"
+              >Accueil</a
+            >
+          </li>
+        </ul>
+      </header>
+
+      <div class="site-main-content">
+        <h2 class="title-underline">Liste des Utilisateurs</h2>
+        <button id="add-user-btn" class="btn btn-primary">
+          Ajouter un nouvel utilisateur
+        </button>
+
+        <div id="user-form-container" style="display: none; margin-top: 20px">
+          <h3>Ajouter/Modifier un Utilisateur</h3>
+          <form id="user-form">
+            <div class="form-group">
+              <label for="user-id"
+                >ID (Laisser vide pour nouvel utilisateur):</label
+              >
+              <input type="text" id="user-id" name="id" readonly />
+            </div>
+            <div class="form-group">
+              <label for="user-username">Nom d'utilisateur:</label>
+              <input type="text" id="user-username" name="username" required />
+            </div>
+            <div class="form-group">
+              <label for="user-email">Email:</label>
+              <input type="email" id="user-email" name="email" required />
+            </div>
+            <div class="form-group">
+              <label for="user-password"
+                >Mot de passe (Obligatoire pour nouveau, laisser vide pour
+                conserver l'ancien):</label
+              >
+              <input type="password" id="user-password" name="password" />
+            </div>
+            <ul class="text-error" id="user-form-errors"></ul>
+            <div class="form-btn-container">
+              <button type="submit" class="btn btn-primary">
+                Sauvegarder Utilisateur
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="cancel-user-form"
+              >
+                Annuler
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <table
+          id="users-table"
+          style="width: 100%; border-collapse: collapse; margin-top: 20px"
+        >
+          <thead>
+            <tr>
+              <th style="border: 1px solid #ddd; padding: 8px">ID</th>
+              <th style="border: 1px solid #ddd; padding: 8px">
+                Nom d'utilisateur
+              </th>
+              <th style="border: 1px solid #ddd; padding: 8px">Email</th>
+              <th style="border: 1px solid #ddd; padding: 8px">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body">
+            <tr>
+              <td colspan="4" style="text-align: center">
+                Chargement des utilisateurs...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p id="user-message" style="margin-top: 20px"></p>
+      </div>
+
+      <footer class="site-footer">© MOVIE DATABASE</footer>
+    </div>
+
+    <script type="module" src="./users.js"></script>
+  </body>
+</html>

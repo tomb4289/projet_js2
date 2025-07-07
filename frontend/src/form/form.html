@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../assets/styles/styles.scss" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/cacbcc77eb.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Ajouter / Modifier un Film</title>
+    <script type="module" src="./form.js" defer></script>
+  </head>
+  <body>
+    <div class="site-container">
+      <header class="main-header">
+        <a class="main-header__brand" href="/">Films</a>
+        <ul class="main-header__nav">
+          <li class="main-header__nav-item">
+            <a href="../../index.html" class="main-header__nav-link">Accueil</a>
+          </li>
+        </ul>
+      </header>
+      <div class="site-main-content">
+        <form class="form form-grid">
+          <h2 class="form__title">Ajouter un nouveau Film</h2>
+          <div class="form__group">
+            <label for="id" class="form__label"
+              >ID (Optionnel pour Nouveau):</label
+            >
+            <input type="text" id="id" name="id" class="form__input" />
+          </div>
+          <div class="form__group">
+            <label for="title" class="form__label">Titre du Film:</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              required
+              class="form__input"
+            />
+          </div>
+          <div class="form__group">
+            <label for="poster" class="form__label">URL de l'Affiche:</label>
+            <input
+              type="url"
+              id="poster"
+              name="poster"
+              required
+              class="form__input"
+            />
+          </div>
+          <div class="form__group">
+            <label for="description" class="form__label">Description:</label>
+            <textarea
+              id="description"
+              name="description"
+              rows="5"
+              required
+              class="form__textarea"
+            ></textarea>
+          </div>
+          <div class="form__group">
+            <label for="release_date" class="form__label"
+              >Date de Sortie (YYYY-MM-DD):</label
+            >
+            <input
+              type="date"
+              id="release_date"
+              name="release_date"
+              required
+              class="form__input"
+            />
+          </div>
+          <div class="form__group">
+            <label for="rating" class="form__label">Note (sur 10):</label>
+            <input
+              type="number"
+              step="0.01"
+              id="rating"
+              name="rating"
+              required
+              min="0"
+              max="10"
+              class="form__input"
+            />
+          </div>
+          <ul class="message-area message-area--error" id="errors"></ul>
+          <div class="form__actions">
+            <button
+              type="button"
+              class="button button--secondary"
+              onclick="window.location.href='/'"
+            >
+              Annuler
+            </button>
+            <button type="submit" class="button button--primary">
+              Sauvegarder
+            </button>
+          </div>
+        </form>
+      </div>
+      <footer class="site-footer">© MOVIE DATABASE</footer>
+    </div>
+  </body>
+</html>
