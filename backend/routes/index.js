@@ -3,6 +3,7 @@ import express from "express";
 
 import produitRoutes from "./products.routes.js";
 import usersRoutes from "./users.routes.js";
+import authRoutes from "./auth.routes.js";
 
 const router = express.Router();
 
@@ -21,7 +22,12 @@ router.get("/", (req, res) => {
   res.end("Coucou !");
 });
 
-router.use("/products", produitRoutes);
-router.use("/users", usersRoutes);
+router.get("/test", (req, res) => {
+  res.json({ message: "Backend is working!" });
+});
+
+router.use("/api/auth", authRoutes);
+router.use("/api/products", produitRoutes);
+router.use("/api/users", usersRoutes);
 
 export default router;

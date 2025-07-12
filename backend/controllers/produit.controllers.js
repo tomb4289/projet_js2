@@ -11,9 +11,12 @@ export const creerProduit = async (req, res) => {
 
 export const listerTousLesProduits = async (req, res) => {
   try {
+    console.log('Getting all products...');
     const products = await Product.findAll();
+    console.log('Products found:', products.length);
     res.json(products);
   } catch (error) {
+    console.error('Error in listerTousLesProduits:', error);
     res.status(500).json({ error: error.message });
   }
 };

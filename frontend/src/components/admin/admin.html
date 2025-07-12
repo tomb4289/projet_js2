@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/cacbcc77eb.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Administration</title>
+  </head>
+  <body>
+    <div class="site-container">
+      <header class="main-header">
+        <a class="main-header__brand" href="/">Films</a>
+        <ul class="main-header__nav">
+          <li class="main-header__nav-item">
+            <a href="../../index.html" class="main-header__nav-link">Accueil</a>
+          </li>
+          <li class="main-header__nav-item">
+            <a href="../admin/admin.html" class="main-header__nav-link main-header__nav-link--active">Administration</a>
+          </li>
+        </ul>
+      </header>
+      
+      <div class="site-main-content">
+        <h1>Panneau d'administration</h1>
+        
+        <div class="admin-dashboard">
+          <div class="admin-stats">
+            <div class="stat-card">
+              <h3>Films</h3>
+              <div class="stat-number" id="moviesCount">0</div>
+              <p>films au total</p>
+            </div>
+            
+            <div class="stat-card">
+              <h3>Utilisateurs</h3>
+              <div class="stat-number" id="usersCount">0</div>
+              <p>utilisateurs inscrits</p>
+            </div>
+            
+            <div class="stat-card">
+              <h3>Commandes</h3>
+              <div class="stat-number" id="ordersCount">0</div>
+              <p>commandes passées</p>
+            </div>
+          </div>
+          
+          <div class="admin-actions">
+            <h2>Actions rapides</h2>
+            <div class="action-buttons">
+              <a href="../../form/form.html" class="button button--primary">
+                <i class="fa-solid fa-plus"></i>
+                Ajouter un film
+              </a>
+              <a href="../../users/users.html" class="button button--primary">
+                <i class="fa-solid fa-users"></i>
+                Gérer les utilisateurs
+              </a>
+              <button id="viewOrdersBtn" class="button button--primary">
+                <i class="fa-solid fa-shopping-cart"></i>
+                Voir les commandes
+              </button>
+              <button id="exportDataBtn" class="button button--secondary">
+                <i class="fa-solid fa-download"></i>
+                Exporter les données
+              </button>
+            </div>
+          </div>
+          
+          <div class="recent-orders">
+            <h2>Commandes récentes</h2>
+            <div id="recentOrdersList" class="orders-list">
+              <p>Aucune commande récente</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer class="site-footer">© MOVIE DATABASE</footer>
+    </div>
+    
+    <script type="module" src="./admin.js"></script>
+  </body>
+</html>

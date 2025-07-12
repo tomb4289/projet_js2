@@ -1,0 +1,145 @@
+@use "../../assets/styles/abstracts/variables" as v;
+
+.admin-dashboard {
+  display: grid;
+  gap: v.$spacing-xl;
+  margin-top: v.$spacing-lg;
+}
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: v.$spacing-lg;
+}
+
+.stat-card {
+  background-color: v.$color-primary-light;
+  padding: v.$spacing-lg;
+  border-radius: v.$border-radius-md;
+  text-align: center;
+  box-shadow: v.$box-shadow-dark;
+  
+  h3 {
+    color: v.$color-accent-red;
+    margin-bottom: v.$spacing-sm;
+    font-size: v.$font-size-md;
+  }
+  
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: v.$color-text-light;
+    margin-bottom: v.$spacing-xs;
+  }
+  
+  p {
+    color: v.$color-text-dark;
+    font-size: v.$font-size-sm;
+  }
+}
+
+.admin-actions {
+  h2 {
+    color: v.$color-accent-red;
+    margin-bottom: v.$spacing-lg;
+  }
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: v.$spacing-md;
+  
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: v.$spacing-xs;
+    padding: v.$spacing-md;
+    
+    i {
+      font-size: v.$font-size-md;
+    }
+  }
+}
+
+.recent-orders {
+  h2 {
+    color: v.$color-accent-red;
+    margin-bottom: v.$spacing-lg;
+  }
+}
+
+.orders-list {
+  background-color: v.$color-primary-light;
+  border-radius: v.$border-radius-md;
+  padding: v.$spacing-lg;
+}
+
+.order-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: v.$spacing-md;
+  align-items: center;
+  padding: v.$spacing-md 0;
+  border-bottom: 1px solid rgba(v.$color-text-dark, 0.3);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  .order-info {
+    h4 {
+      color: v.$color-text-light;
+      margin-bottom: v.$spacing-xxs;
+      font-size: v.$font-size-sm;
+    }
+    
+    p {
+      color: v.$color-text-dark;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+  }
+  
+  .order-total {
+    font-weight: 700;
+    color: v.$color-text-light;
+    font-size: v.$font-size-md;
+  }
+}
+
+.status-badge {
+  padding: v.$spacing-xxs v.$spacing-xs;
+  border-radius: v.$border-radius-sm;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  
+  &--confirmée {
+    background-color: v.$color-success;
+    color: white;
+  }
+  
+  &--en-cours {
+    background-color: #ff9800;
+    color: white;
+  }
+  
+  &--livrée {
+    background-color: #2196f3;
+    color: white;
+  }
+}
+
+@media (max-width: 768px) {
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .order-item {
+    grid-template-columns: 1fr;
+    gap: v.$spacing-xs;
+    text-align: center;
+  }
+}

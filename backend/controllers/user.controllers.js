@@ -1,8 +1,21 @@
 import User from "../database/models/User.js";
+import bcrypt from 'bcrypt';
 
 export const creerUnUtilisateur = async (req, res) => {
   try {
-    const user = await User.create(req.body);
+    const { password, ...userData } = req.body;
+    
+    if (password) {
+      if (password.length < 6) {
+        return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 6 caractères' });
+      }
+      userData.password = await bcrypt.hash(password, 10);
+    }
+    
+    userData.estActif = true;
+    
+    const user = await User.create(userData);
+    const { password: _, ...userWithoutPassword } = user;
     res.status(201).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -30,8 +43,19 @@ export const obtenirUnUtilisateur = async (req, res) => {
 
 export const mettreAJourUnUtilisateur = async (req, res) => {
   try {
-    const user = await User.update(req.params.id, req.body);
+    const { password, ...updates } = req.body;
+    
+    if (password) {
+      if (password.length < 6) {
+        return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 6 caractères' });
+      }
+      updates.password = await bcrypt.hash(password, 10);
+    }
+    
+    const user = await User.update(req.params.id, updates);
     if (!user) return res.status(404).json({ error: "Utilisateur non trouvé" });
+    
+    const { password: _, ...userWithoutPassword } = user;
     res.json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });

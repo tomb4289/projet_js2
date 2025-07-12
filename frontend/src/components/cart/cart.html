@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/cacbcc77eb.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Panier</title>
+  </head>
+  <body>
+    <div class="site-container">
+      <header class="main-header">
+        <a class="main-header__brand" href="/">Films</a>
+        <ul class="main-header__nav">
+          <li class="main-header__nav-item">
+            <a href="../../index.html" class="main-header__nav-link">Accueil</a>
+          </li>
+          <li class="main-header__nav-item">
+            <a href="../cart/cart.html" class="main-header__nav-link main-header__nav-link--active">
+              Panier <span class="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </header>
+      
+      <div class="site-main-content">
+        <h1>Mon Panier</h1>
+        
+        <div id="cartContainer">
+          <div id="emptyCart" class="empty-cart" style="display: none;">
+            <h2>Votre panier est vide</h2>
+            <p>Découvrez notre sélection de films et ajoutez-les à votre panier.</p>
+            <a href="../../index.html" class="button button--primary">Continuer les achats</a>
+          </div>
+          
+          <div id="cartItems" class="cart-items"></div>
+          
+          <div id="cartSummary" class="cart-summary" style="display: none;">
+            <div class="cart-total">
+              <h3>Total: <span id="cartTotal">0.00</span>€</h3>
+            </div>
+            <div class="cart-actions">
+              <button id="clearCartBtn" class="button button--secondary">Vider le panier</button>
+              <button id="checkoutBtn" class="button button--primary">Passer commande</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer class="site-footer">© MOVIE DATABASE</footer>
+    </div>
+    
+    <script type="module" src="./panier.js"></script>
+  </body>
+</html>

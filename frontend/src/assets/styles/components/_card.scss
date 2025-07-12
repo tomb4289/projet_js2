@@ -101,6 +101,24 @@
     padding: v.$spacing-xxs v.$spacing-xs;
     border-radius: v.$border-radius-sm;
   }
+  
+  &__actions {
+    margin-top: v.$spacing-sm;
+    padding: v.$spacing-sm;
+    background-color: v.$color-primary-dark;
+    
+    .add-to-cart-btn {
+      width: 100%;
+      padding: v.$spacing-xs v.$spacing-sm;
+      font-size: v.$font-size-sm;
+    }
+  }
+  
+  &__content-area {
+    cursor: pointer;
+    display: block;
+    flex-grow: 1;
+  }
 }
 
 .movie-poster {

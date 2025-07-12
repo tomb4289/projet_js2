@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <title>Commande</title>
+  </head>
+  <body>
+    <div class="site-container">
+      <header class="main-header">
+        <a class="main-header__brand" href="/">Films</a>
+        <ul class="main-header__nav">
+          <li class="main-header__nav-item">
+            <a href="../../index.html" class="main-header__nav-link">Accueil</a>
+          </li>
+          <li class="main-header__nav-item">
+            <a href="../cart/cart.html" class="main-header__nav-link">
+              Panier <span class="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </header>
+      
+      <div class="site-main-content">
+        <h1>Finaliser la commande</h1>
+        
+        <div class="checkout-container">
+          <div class="checkout-form">
+            <h2>Informations de livraison</h2>
+            <form id="checkoutForm" class="form">
+              <div class="form-grid">
+                <div class="form__group">
+                  <label for="firstName" class="form__label">Prénom:</label>
+                  <input type="text" id="firstName" name="firstName" required class="form__input" />
+                </div>
+                
+                <div class="form__group">
+                  <label for="lastName" class="form__label">Nom:</label>
+                  <input type="text" id="lastName" name="lastName" required class="form__input" />
+                </div>
+                
+                <div class="form__group">
+                  <label for="email" class="form__label">Email:</label>
+                  <input type="email" id="email" name="email" required class="form__input" />
+                </div>
+                
+                <div class="form__group">
+                  <label for="phone" class="form__label">Téléphone:</label>
+                  <input type="tel" id="phone" name="phone" required class="form__input" />
+                </div>
+                
+                <div class="form__group">
+                  <label for="address" class="form__label">Adresse:</label>
+                  <input type="text" id="address" name="address" required class="form__input" />
+                </div>
+                
+                <div class="form__group">
+                  <label for="city" class="form__label">Ville:</label>
+                  <input type="text" id="city" name="city" required class="form__input" />
+                </div>
+                
+                <div class="form__group">
+                  <label for="postalCode" class="form__label">Code postal:</label>
+                  <input type="text" id="postalCode" name="postalCode" required class="form__input" />
+                </div>
+                
+                <div class="form__group">
+                  <label for="country" class="form__label">Pays:</label>
+                  <select id="country" name="country" required class="form__select">
+                    <option value="">Sélectionner un pays</option>
+                    <option value="FR">France</option>
+                    <option value="BE">Belgique</option>
+                    <option value="CH">Suisse</option>
+                    <option value="CA">Canada</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form__group">
+                <label for="notes" class="form__label">Notes de commande (optionnel):</label>
+                <textarea id="notes" name="notes" rows="3" class="form__textarea"></textarea>
+              </div>
+            </form>
+          </div>
+          
+          <div class="order-summary">
+            <h2>Résumé de la commande</h2>
+            <div id="orderItems" class="order-items"></div>
+            <div class="order-total">
+              <div class="total-line">
+                <span>Sous-total:</span>
+                <span id="subtotal">0.00€</span>
+              </div>
+              <div class="total-line">
+                <span>Livraison:</span>
+                <span id="shipping">5.99€</span>
+              </div>
+              <div class="total-line total-line--final">
+                <span>Total:</span>
+                <span id="finalTotal">0.00€</span>
+              </div>
+            </div>
+            
+            <button id="placeOrderBtn" class="button button--primary button--full-width">
+              Confirmer la commande
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <footer class="site-footer">© MOVIE DATABASE</footer>
+    </div>
+    
+    <script type="module" src="./checkout.js"></script>
+  </body>
+</html>

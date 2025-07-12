@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <title>Connexion</title>
+  </head>
+  <body>
+    <div class="site-container">
+      <header class="main-header">
+        <a class="main-header__brand" href="/">Parfums</a>
+        <ul class="main-header__nav">
+          <li class="main-header__nav-item">
+            <a href="../../index.html" class="main-header__nav-link">Accueil</a>
+          </li>
+          <li class="main-header__nav-item">
+            <a href="../login/login.html" class="main-header__nav-link main-header__nav-link--active">Connexion</a>
+          </li>
+        </ul>
+      </header>
+      
+      <div class="site-main-content">
+        <div class="form-container">
+          <form id="loginForm" class="form">
+            <h2 class="form__title">Connexion</h2>
+            
+            <div class="form__group">
+              <label for="email" class="form__label">Email:</label>
+              <input type="email" id="email" name="email" required class="form__input" />
+            </div>
+            
+            <div class="form__group">
+              <label for="password" class="form__label">Mot de passe:</label>
+              <input type="password" id="password" name="password" required class="form__input" />
+            </div>
+            
+            <div id="loginErrors" class="form__error-message" style="display: none;"></div>
+            
+            <div class="form__actions">
+              <button type="submit" class="button button--primary">Se connecter</button>
+              <button type="button" class="button button--secondary" onclick="window.location.href='/'">
+                Annuler
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <footer class="site-footer">© Parfums</footer>
+    </div>
+    
+    <script type="module" src="./login.js"></script>
+  </body>
+</html>

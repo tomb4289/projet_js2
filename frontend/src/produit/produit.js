@@ -1,4 +1,9 @@
 import "../assets/styles/styles.scss";
+import "./produit.scss";
+import { authService } from "../services/auth.js";
+import { updateHeader } from "../components/header/header.js";
+
+updateHeader();
 
 const movieDetailContainer = document.getElementById("movieDetailContainer");
 const messageArea = document.getElementById("messageArea");

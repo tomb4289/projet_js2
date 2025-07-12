@@ -1,4 +1,16 @@
 import "../assets/styles/styles.scss";
+import { authService } from "../services/auth.js";
+import { updateHeader } from "../components/header/header.js";
+import { Alert } from "../components/alert/index.js";
+
+updateHeader();
+
+if (!authService.isAdmin()) {
+  Alert.error("Accès refusé. Droits administrateur requis.");
+  setTimeout(() => {
+    window.location.href = "/";
+  }, 2000);
+}
 
 const usersTableBody = document.getElementById("users-table-body");
 const userFormContainer = document.getElementById("user-form-container");
@@ -15,7 +27,9 @@ const API_BASE_URL = "http://localhost:5252/api/users";
 const fetchUsers = async () => {
   try {
     userMessage.textContent = "Chargement des utilisateurs...";
-    const response = await fetch(API_BASE_URL);
+    const response = await fetch(API_BASE_URL, {
+      headers: authService.getAuthHeaders(),
+    });
     if (!response.ok) {
       throw new Error(`Erreur HTTP: ${response.status}`);
     }
@@ -125,7 +139,7 @@ const submitUserForm = async (event) => {
     const response = await fetch(url, {
       method: method,
       headers: {
-        "Content-Type": "application/json",
+        ...authService.getAuthHeaders(),
       },
       body: JSON.stringify(dataToSend),
     });
@@ -155,7 +169,9 @@ const submitUserForm = async (event) => {
 
 const editUser = async (id) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/${id}`);
+    const response = await fetch(`${API_BASE_URL}/${id}`, {
+      headers: authService.getAuthHeaders(),
+    });
     if (!response.ok) {
       throw new Error(`Utilisateur avec l'ID ${id} non trouvé.`);
     }
@@ -175,6 +191,7 @@ const deleteUser = async (id) => {
   try {
     const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: "DELETE",
+      headers: authService.getAuthHeaders(),
     });
 
     if (response.ok) {

@@ -15,12 +15,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = 5252;
 
 app.use(morgan("short"));
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"],
+  credentials: true
+}));
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", router);
+app.use("/", router);
 
 app.listen(PORT, () => console.log(`Server is on http://localhost:${PORT}`));
