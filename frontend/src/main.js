@@ -641,3 +641,132 @@ if (initialMovieId) {
   showSection("add-movie");
   loadMovieForEdit(initialMovieId);
 }
+
+import "./assets/styles/styles.scss";
+import "./main.scss";
+import { env } from "./config/env.js";
+import { Alert } from "./components/alert/index.js";
+import { divRemove } from "./components/divRemove/index.js";
+import { authService } from "./services/auth.js";
+import { updateHeader } from "./components/header/header.js";
+
+const content = document.querySelector(".site-main-content");
+
+updateHeader();
+
+const displayMovies = (movies) => {
+  const moviesContainer = document.createElement("div");
+  moviesContainer.className = "movie-list";
+  const movieElements = movies
+    .slice(0)
+    .reverse()
+    .map((movie, index) => createMovieElement(movie, index));
+
+  moviesContainer.append(...movieElements);
+  addEditDeleteEvents(moviesContainer);
+  content.append(moviesContainer);
+};
+
+const createMovieElement = (movie, index) => {
+  const div = document.createElement("div");
+  div.className = "movie-card";
+  div.style.position = "relative";
+  div.innerHTML = `
+    <i data-id="${movie.id}" class="x_delete fa-solid fa-trash"></i>
+    <i data-id="${movie.id}" class="x_edit fa-solid fa-pen-to-square"></i>
+    <a href="/produit/produit.html?id=${movie.id}">
+      <img src="${movie.poster}" alt="${movie.title}" class="movie-card__poster">
+      <div class="movie-card__content">
+        <h2 class="movie-card__title">${movie.title}</h2>
+        <p class="movie-card__description">${movie.description.substring(0, 100)}...</p>
+        <div class="movie-card__meta">
+          <span class="movie-card__release-date">Sortie: ${
+            movie.release_date ? movie.release_date.substring(0, 4) : "N/A"
+          }</span>
+          <span class="movie-card__rating">⭐ ${movie.rating}/10</span>
+        </div>
+      </div>
+    </a>
+  `;
+  return div;
+};
+
+const addEditDeleteEvents = (container) => {
+  const deleteButtons = container.querySelectorAll(".fa-trash");
+  const editButtons = container.querySelectorAll(".fa-pen-to-square");
+  
+  const isAdmin = authService.isAdmin();
+  
+  if (!isAdmin) {
+    deleteButtons.forEach(btn => btn.style.display = 'none');
+    editButtons.forEach(btn => btn.style.display = 'none');
+    return;
+  }
+  
+  editButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const target = event.target;
+      const movieId = target.dataset.id;
+      window.location.assign(`./form/form.html?id=${movieId}`);
+    });
+  });
+
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      try {
+        const confirm = await Alert.confirm(
+          "Cette action est irréversible. Désirez-vous continuer ?",
+          "Supprimer",
+          "Annuler"
+        );
+        if (confirm) {
+          const target = event.target;
+          const movieId = target.dataset.id;
+          const response = await fetch(
+            `${env.BACKEND_PRODUCTS_URL}/${movieId}`,
+            {
+              method: "DELETE",
+              headers: authService.getAuthHeaders(),
+            }
+          );
+          const body = await response.json();
+          divRemove(".movie-list");
+          fetchMovies();
+          Alert.success("Film supprimé avec succès!");
+        }
+      } catch (e) {
+        console.log("e : ", e);
+        Alert.error("Erreur lors de la suppression du film");
+      }
+    });
+  });
+};
+
+const fetchMovies = async () => {
+  try {
+    console.log('Fetching movies from:', env.BACKEND_PRODUCTS_URL);
+    const response = await fetch(`${env.BACKEND_PRODUCTS_URL}`);
+    console.log('Response status:', response.status);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    let movies = await response.json();
+    console.log('Movies received:', movies);
+    
+    if (!Array.isArray(movies)) {
+      movies = [movies];
+    }
+    displayMovies(movies);
+  } catch (e) {
+    console.error("Fetch error:", e);
+    Alert.error("Erreur lors du chargement des films");
+  }
+};
+
+fetchMovies();
